@@ -79,6 +79,25 @@ The interface features:
    npm run auto-shutdown
    ```
 
+### Docker Deployment (Recommended for Production)
+
+Run the entire application in a Docker container on your home server:
+
+```bash
+# Build the Docker image
+docker build -t kumaforce-web:latest .
+
+# Run the container
+docker run -d \
+  --name kumaforce-web \
+  --restart unless-stopped \
+  -p 3000:3000 \
+  --env-file .env.local \
+  kumaforce-web:latest
+```
+
+🐳 **For detailed Docker instructions, see [DOCKER.md](./DOCKER.md)**
+
 📖 **For detailed setup instructions, see [SETUP.md](./SETUP.md)**
 
 ## Project Structure
