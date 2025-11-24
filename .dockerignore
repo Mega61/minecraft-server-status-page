@@ -53,8 +53,7 @@ Dockerfile
 .dockerignore
 docker-compose.yml
 
-# Scripts (not needed in production)
-scripts
+# Scripts (needed for monitor container, minimal size impact on web)
 
 # TypeScript cache
 *.tsbuildinfo
