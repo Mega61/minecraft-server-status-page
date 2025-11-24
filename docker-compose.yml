@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Web application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kumaforce-web:latest
+    container_name: kumaforce-web
+    restart: unless-stopped
+    ports:
+      - "25566:3000"
+    env_file:
+      - .env
+    networks:
+      - kumaforce
+
+  # Auto-shutdown monitor
+  monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    image: kumaforce-monitor:latest
+    container_name: kumaforce-monitor
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - kumaforce
+    depends_on:
+      - web
+
+networks:
+  kumaforce:
+    driver: bridge

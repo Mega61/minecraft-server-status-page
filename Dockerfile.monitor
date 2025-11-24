@@ -1,0 +1,26 @@
+# Dockerfile for Auto-Shutdown Monitor
+# Lightweight container that monitors Minecraft server activity
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+
+# Install dependencies (including tsx for running TypeScript)
+RUN npm ci --registry=https://registry.npmjs.org/
+
+# Copy necessary source files
+COPY scripts/ ./scripts/
+COPY lib/ ./lib/
+
+# Create a non-root user for security
+RUN addgroup --system --gid 1001 monitor && \
+    adduser --system --uid 1001 monitor && \
+    chown -R monitor:monitor /app
+
+USER monitor
+
+# Run the auto-shutdown script
+CMD ["npm", "run", "auto-shutdown"]
