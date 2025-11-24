@@ -15,12 +15,5 @@ RUN npm ci --registry=https://registry.npmjs.org/
 COPY scripts/ ./scripts/
 COPY lib/ ./lib/
 
-# Create a non-root user for security
-RUN addgroup --system --gid 1001 monitor && \
-    adduser --system --uid 1001 monitor && \
-    chown -R monitor:monitor /app
-
-USER monitor
-
 # Run the auto-shutdown script
 CMD ["npm", "run", "auto-shutdown"]
